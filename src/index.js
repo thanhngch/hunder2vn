@@ -2,8 +2,6 @@ const FOUR_1 = 'bốn';
 const FOUR_2 = 'tư';
 const ZERO_1 = 'lẻ';
 const ZERO_2 = 'linh';
-const THOUSAND_1 = 'nghìn';
-const THOUSAND_2 = 'ngàn';
 
 export const hunder2vn = (number, configs) => {
   const digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm',
@@ -53,48 +51,71 @@ export const hunder2vn = (number, configs) => {
 };
 
 export const number2vn = (numberParam, configsParams) => {
-  if (typeof (numberParam) !== 'number') {
-    throw new Error('Parameter is number');
+  if (typeof (numberParam) !== 'number'
+    && typeof (numberParam) !== 'string'
+    && typeof (numberParam) !== 'bigint') {
+    throw new Error('Parameter is number, string or bigint');
   }
-  if (!Number.isInteger(numberParam)) {
+  if (typeof (numberParam) === 'number' && numberParam > Number.MAX_SAFE_INTEGER) {
+    throw new Error('Number to large, please using string');
+  }
+  let numberString = numberParam.toString();
+  if (numberString.indexOf('.') !== -1) {
     throw new Error('Number is integer');
   }
   const configs = {
     short: false,
     four: FOUR_1,
     zero: ZERO_1,
-    thousand: THOUSAND_1,
+    thousand: 'nghìn',
+    million: 'triệu',
+    billion: 'tỉ',
+    hundredZero: true,
     ...configsParams,
   };
   const arrayNumber = [];
-
-  let number = numberParam;
   const resultStrings = [];
-  if (number === 0) {
+  if (numberString === '0') {
     return 'không';
   }
   let negativeNumber = false;
-  if (number < 0) {
-    number = -number;
+  if (numberString[0] === '-') {
+    numberString = numberString.substring(1);
     negativeNumber = true;
   }
-  while (number) {
-    arrayNumber.push(number % 1000);
-    number = Number.parseInt(number / 1000, 10);
+  while (numberString) {
+    arrayNumber.push(Number.parseInt(numberString.slice(-3), 10));
+    numberString = numberString.substring(0, numberString.length - 3);
   }
-  const tenPower3s = ['', 'nghìn', 'triệu', 'tỉ'];
-  if (configs.thousand === THOUSAND_2) {
-    tenPower3s[1] = 'ngàn';
+  const tenPower3s = ['', configs.thousand, configs.million, configs.billion];
+
+  for (let i = 0; i < 10; i += 1) {
+    const lastTenPower3s = tenPower3s[tenPower3s.length - 1];
+    tenPower3s.push(`${configs.thousand} ${lastTenPower3s}`);
+    tenPower3s.push(`${configs.million} ${lastTenPower3s}`);
+    tenPower3s.push(`${configs.billion} ${lastTenPower3s}`);
   }
+
   arrayNumber.forEach((aNumber, index) => {
     const tenPower3sString = index ? ` ${tenPower3s[index]}` : '';
-    const numberString = aNumber !== 0 ? hunder2vn(aNumber, configs) : '';
-    let numberStringAndTen3s = `${numberString}${tenPower3sString}`;
-    if (arrayNumber.length > 1 && index === 0 && aNumber < 11 && aNumber > 0) {
-      numberStringAndTen3s = `lẻ ${numberString}`;
+    const numberVnString = aNumber !== 0 ? hunder2vn(aNumber, configs) : '';
+    let numberVnStringAndTen3s = '';
+    if (aNumber !== 0) {
+      numberVnStringAndTen3s = `${numberVnString}${tenPower3sString}`;
     }
-    if (numberStringAndTen3s) {
-      resultStrings.unshift(numberStringAndTen3s);
+    if (arrayNumber.length > 1 && index === 0 && aNumber < 100 && aNumber > 0) {
+      let hunderthIsZero = 'không trăm ';
+      if (configs.hundredZero === false) {
+        hunderthIsZero = '';
+      }
+      if (aNumber < 10) {
+        numberVnStringAndTen3s = `${hunderthIsZero}lẻ ${numberVnString}`;
+      } else {
+        numberVnStringAndTen3s = `${hunderthIsZero}${numberVnString}`;
+      }
+    }
+    if (numberVnStringAndTen3s) {
+      resultStrings.unshift(numberVnStringAndTen3s);
     }
   });
   if (negativeNumber) {
