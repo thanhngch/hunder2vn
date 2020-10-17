@@ -47,7 +47,7 @@ export const hunder2vn = (number, configs) => {
     }
     return `${digits[firstNumber]} trăm${secondString}`;
   }
-  return '';
+  throw new Error('Number must less than 1000');
 };
 
 export const number2vn = (numberParam, configsParams) => {
