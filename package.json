@@ -1,7 +1,7 @@
 {
   "name": "number2vn",
   "description": "Number to Viet Nam string",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {

@@ -16,7 +16,7 @@ number2vn(123456); // hoặc number2vn('123456');
 ## Cài đặt
 
 ```bash
-npm i number2vn
+npm i number2vn --save
 ```
 
 ## Config
@@ -25,8 +25,8 @@ npm i number2vn
 
 ```js
 import number2vn from number2vn;
-// or const number2vn = require('number2vn');
-const configs = {
+// or const { number2vn } = require('number2vn');
+const config = {
   short: true,
 };
 number2vn(23); // -> hai mươi ba
@@ -35,7 +35,7 @@ number2vn(23, config); // -> hai ba
 
 - Số `4` cuối được chuyển tù `bốn` thành `tư`
 ```js
-const configs = {
+const config = {
   short: true,
   four: 'tư',
 };
@@ -46,7 +46,7 @@ number2vn(34, config); // -> ba tư
 
 - Số `0` ở hàng chục chuyển từ `lẻ` thành `linh`
 ```js
-const configs = {
+const config = {
   zero: 'linh',
 };
 number2vn(101); // -> một trăm lẻ một
