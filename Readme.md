@@ -6,12 +6,17 @@
 [![GitHub license](https://img.shields.io/github/license/thanhngch/number2vn.svg)](https://github.com/thanhngch/number2vn/blob/master/LICENCE)
 - Không sử dụng thư viện ngoài
 - Test 100% coverage
-- Chỉ 126 loc
+- Chỉ ~ 130 loc
 - Nhiều config tùy chọn
 
 ```js
 number2vn(123456); // hoặc number2vn('123456');
 // -> một trăm hai mươi ba nghìn bốn trăm năm mươi sáu
+```
+## Cài đặt
+
+```bash
+npm i number2vn
 ```
 
 ## Config
@@ -19,6 +24,8 @@ number2vn(123456); // hoặc number2vn('123456');
 - Bỏ `mươi` trong hàng chục.
 
 ```js
+import number2vn from number2vn;
+// or const number2vn = require('number2vn');
 const configs = {
   short: true,
 };

@@ -123,3 +123,5 @@ export const number2vn = (numberParam, configsParams) => {
   }
   return resultStrings.join(' ');
 };
+
+export default number2vn;

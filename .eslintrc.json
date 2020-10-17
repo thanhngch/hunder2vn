@@ -13,7 +13,8 @@
     "space-before-function-paren": ["error", "never"],
     "eqeqeq": ["error", "smart"],
     "no-return-assign": 0,
-    "no-bitwise": "off"
+    "no-bitwise": "off",
+    "import/no-named-as-default": "off"
   },
   "env": {"es6": true}
 }

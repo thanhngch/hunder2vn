@@ -1,6 +1,4 @@
-import {
-  number2vn,
-} from '../src/index';
+import number2vn from '../src/index';
 
 it('Test from 0 to 10', () => {
   expect(number2vn(0)).toBe('không');
