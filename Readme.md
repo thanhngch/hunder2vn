@@ -1,9 +1,9 @@
 ## Chuyển đổi số thành chữ Việt Nam
-
-[![Build Status](https://travis-ci.org/thanhngch/hunder2vn.svg?branch=main)](https://travis-ci.org/thanhngch/hunder2vn)
-[![codecov](https://codecov.io/gh/thanhngch/hunder2vn/branch/main/graph/badge.svg?token=X0XKAJ7POV)](undefined)
+[![npm version](http://img.shields.io/npm/v/number2vn.svg?style=flat-square)](https://npmjs.org/package/number2vn)
+[![Build Status](https://travis-ci.org/thanhngch/number2vn.svg?branch=main)](https://travis-ci.org/thanhngch/number2vn)
+[![Codecov](https://img.shields.io/codecov/c/github/thanhngch/number2vn.svg?style=flat-square)](https://codecov.io/gh/thanhngch/number2vn)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
-[![GitHub license](https://img.shields.io/github/license/thanhngch/hunder2vn.svg)](https://github.com/thanhngch/hunder2vn/blob/master/LICENCE)
+[![GitHub license](https://img.shields.io/github/license/thanhngch/number2vn.svg)](https://github.com/thanhngch/number2vn/blob/master/LICENCE)
 - Không sử dụng thư viện ngoài
 - Test 100% coverage
 - Chỉ 126 loc
