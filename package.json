@@ -1,7 +1,8 @@
 {
   "name": "number2vn",
+  "description": "Number to Viet Nam string",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
   "license": "MIT",
   "scripts": {
     "test": "jest",
@@ -24,5 +25,16 @@
     "esm": "^3.2.25",
     "jest": "^26.4.2",
     "open-cli": "^6.0.1"
-  }
+  },
+  "keywords": [
+    "number2vn",
+  ],
+  "author": "Nguyễn Chí Thanh",
+  "repository": "https://github.com/thanhngch/number2vn",
+  "engines": {
+    "node": ">=8"
+  },
+  "files": [
+    "build"
+  ]
 }
