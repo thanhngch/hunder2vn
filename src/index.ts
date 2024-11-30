@@ -3,7 +3,18 @@ const FOUR_2 = 'tư';
 const ZERO_1 = 'lẻ';
 const ZERO_2 = 'linh';
 
-export const hunder2vn = (number, configs) => {
+export type Number2VnConfig = {
+  short?: boolean
+  four?: string
+  zero?: string
+  thousand?: string
+  million?: string
+  billion?: string
+  hundredZero?: boolean
+}
+
+const hundred2vn : (number: number, configs: Number2VnConfig) => string 
+= (number: number, configs: Number2VnConfig) => {
   const digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm',
     'sáu', 'bảy', 'tám', 'chín', 'mười',
   ];
@@ -14,13 +25,13 @@ export const hunder2vn = (number, configs) => {
     'sáu', 'bảy', 'tám', 'chín',
   ];
   if (number <= 10) {
-    return digits[number];
+    return digits[number] as string;
   }
   if (number <= 19) {
     return `mười ${digit1s[number % 10]}`;
   }
   if (number < 100) {
-    const firstNumber = Number.parseInt(number / 10, 10);
+    const firstNumber = Math.floor(number / 10);
     let secondNumber = digit2s[number % 10];
     if (configs.four === FOUR_2 && number % 10 === 4) {
       secondNumber = 'tư';
@@ -34,23 +45,24 @@ export const hunder2vn = (number, configs) => {
     return `${digits[firstNumber]} mươi${secondNumber}`;
   }
   if (number < 1000) {
-    const firstNumber = Number.parseInt(number / 100, 10);
-    const hunderNumber = number % 100;
+    const firstNumber =  Math.floor(number / 100);
+    const hundredNumber = number % 100;
     let secondString;
-    if (hunderNumber === 0) {
+    if (hundredNumber === 0) {
       secondString = '';
-    } else if (hunderNumber < 10) {
+    } else if (hundredNumber < 10) {
       const zeroString = configs.zero === ZERO_2 ? 'linh' : 'lẻ';
-      secondString = ` ${zeroString} ${hunder2vn(hunderNumber)}`;
+      secondString = ` ${zeroString} ${hundred2vn(hundredNumber, configs)}`;
     } else {
-      secondString = ` ${hunder2vn(hunderNumber, configs)}`;
+      secondString = ` ${hundred2vn(hundredNumber, configs)}`;
     }
     return `${digits[firstNumber]} trăm${secondString}`;
   }
-  throw new Error('Number must less than 1000');
+  return '';
 };
 
-export const number2vn = (numberParam, configsParams) => {
+
+export const number2vn = (numberParam: number | string | bigint, configsParams?: Number2VnConfig) => {
   if (typeof (numberParam) !== 'number'
     && typeof (numberParam) !== 'string'
     && typeof (numberParam) !== 'bigint') {
@@ -63,7 +75,7 @@ export const number2vn = (numberParam, configsParams) => {
   if (numberString.indexOf('.') !== -1) {
     throw new Error('Number is integer');
   }
-  const configs = {
+  const configs: Number2VnConfig = {
     short: false,
     four: FOUR_1,
     zero: ZERO_1,
@@ -73,6 +85,7 @@ export const number2vn = (numberParam, configsParams) => {
     hundredZero: true,
     ...configsParams,
   };
+  
   const arrayNumber = [];
   const resultStrings = [];
   if (numberString === '0') {
@@ -98,7 +111,7 @@ export const number2vn = (numberParam, configsParams) => {
 
   arrayNumber.forEach((aNumber, index) => {
     const tenPower3sString = index ? ` ${tenPower3s[index]}` : '';
-    const numberVnString = aNumber !== 0 ? hunder2vn(aNumber, configs) : '';
+    const numberVnString = aNumber !== 0 ? hundred2vn(aNumber, configs) : '';
     let numberVnStringAndTen3s = '';
     if (aNumber !== 0) {
       numberVnStringAndTen3s = `${numberVnString}${tenPower3sString}`;

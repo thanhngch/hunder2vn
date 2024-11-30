@@ -1,13 +1,8 @@
 import {
-  hunder2vn,
   number2vn,
 } from '../src/index';
 
-it('Test error hunder2vn', () => {
-  expect(hunder2vn.bind(null, 1000)).toThrow(Error);
-});
-
-it('Test error hunder2vn', () => {
+it('Test error number2vn', () => {
   // wrong parameter type
   expect(number2vn.bind(null, new Date())).toThrow(Error);
   // large number check
